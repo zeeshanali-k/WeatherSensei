@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:title="">
+        <menu>
+            <item
+                android:title="Fahrenheit"
+                app:actionViewClass="com.google.android.material.switchmaterial.SwitchMaterial"
+                android:id="@+id/menu_fahrenheit_switch"
+                android:icon="@drawable/ic_baseline_ac_unit_24"
+                />
+            <item
+                android:title="Background"
+                app:actionViewClass="com.google.android.material.switchmaterial.SwitchMaterial"
+                android:id="@+id/menu_backgroung_image_switch"
+                android:icon="@drawable/ic_baseline_wallpaper_24"
+                />
+            <item
+                android:title="Startup Tips"
+                app:actionViewClass="com.google.android.material.switchmaterial.SwitchMaterial"
+                android:id="@+id/menu_tips_switch"
+                android:icon="@drawable/ic_baseline_info_24"
+                />
+        </menu>
+    </item>
+
+    <item android:title="">
+        <menu>
+
+        <item
+            android:title="Weather Guide"
+            android:id="@+id/menu_weather_guide"
+            android:icon="@drawable/ic_round_menu_book_24"
+            />
+            <item
+                android:title="About"
+                android:id="@+id/menu_about"
+                android:icon="@drawable/ic_baseline_info_24"
+                />
+            <item
+                android:title="Share App"
+                android:id="@+id/menu_share_app"
+                android:icon="@android:drawable/ic_menu_share"
+                />
+
+            <item
+                android:title="Exit"
+                android:icon="@drawable/ic_twotone_exit_to_app_24"
+                android:id="@+id/menu_exit"
+                />
+        </menu>
+    </item>
+
+
+
+</menu>

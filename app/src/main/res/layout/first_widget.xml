@@ -1,0 +1,221 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:id="@+id/the_first_widget"
+    android:padding="@dimen/widget_margin">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:background="#483A3B3A"
+        />
+
+    <TextView
+        android:id="@+id/first_widget_location_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:gravity="center"
+        android:padding="2dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
+        android:textSize="18sp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Location ---"
+        app:drawableTint="@color/colorPrimaryDark"
+        android:textColor="@color/colorPrimaryDark"
+        app:drawableStartCompat="@drawable/ic_baseline_my_location_24" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/first_widget_location_tv"
+        android:layout_alignStart="@id/first_widget_time_tv"
+        android:text="Last Updated:"
+        android:padding="2dp"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/colorPrimaryDark"
+        />
+
+    <TextView
+        android:id="@+id/first_widget_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:layout_below="@id/first_widget_location_tv"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="10dp"
+        android:padding="2dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:text="--:-- --"
+        />
+
+    <TextView
+        android:id="@+id/first_widget_weather_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/first_widget_pop_img"
+        android:layout_alignStart="@id/first_widget_time_tv"
+        android:layout_toStartOf="@id/first_widget_max_temp_tv"
+
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:text="-----"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="18sp" />
+
+    <ImageView
+        android:id="@+id/first_widget_pop_img"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_below="@id/first_widget_time_tv"
+        android:layout_alignStart="@id/first_widget_time_tv"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/rain_chances_icon"
+        />
+
+    <TextView
+        android:id="@+id/first_widget_pop_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="--%"
+        android:layout_toEndOf="@id/first_widget_pop_img"
+        android:layout_alignTop="@id/first_widget_pop_img"
+        android:layout_alignBottom="@id/first_widget_pop_img"
+        android:layout_marginStart="15dp"
+        android:textColor="@color/colorPrimaryDark"
+        />
+
+   <ImageView
+       android:id="@+id/first_widget_img"
+       android:layout_width="70dp"
+       android:layout_height="70dp"
+       android:layout_alignParentEnd="true"
+       android:layout_below="@id/first_widget_location_tv"
+       android:src="@drawable/weather_sensei_icon"
+       android:layout_margin="10dp"
+       android:background="@android:color/transparent"
+       android:contentDescription="PLACEHOLDER IMAGE" />
+
+    <TextView
+        android:id="@+id/first_widget_weather_condition_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_below="@id/first_widget_img"
+        android:layout_alignEnd="@id/first_widget_img"
+        android:text="----"
+        android:gravity="center"
+        android:layout_alignStart="@id/first_widget_img"
+        />
+
+    <TextView
+        android:id="@+id/first_widget_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/first_widget_location_tv"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:textSize="50sp"
+        android:text="--"
+        android:textColor="@color/colorPrimaryDark"
+        />
+
+    <TextView
+        android:id="@+id/first_widget_temp_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/first_widget_tv"
+        android:layout_toEndOf="@id/first_widget_tv"
+        android:textSize="18sp"
+        android:text="°C"
+        android:textColor="@color/colorPrimaryDark"
+        />
+
+    <TextView
+        android:id="@+id/first_widget_min_temp_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="Min: "
+        android:layout_marginTop="3dp"
+        android:layout_below="@id/first_widget_tv"
+        android:layout_alignStart="@id/first_widget_tv"
+        android:textColor="@color/colorPrimaryDark"
+        />
+
+    <TextView
+        android:id="@+id/first_widget_min_temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-- "
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_alignTop="@id/first_widget_min_temp_tv"
+        android:layout_toEndOf="@id/first_widget_min_temp_tv"
+        android:layout_alignBottom="@id/first_widget_min_temp_tv"
+        android:layout_marginStart="2dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/first_widget_min_temp_unit"
+        android:text="°C"
+        android:textSize="9sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_alignTop="@id/first_widget_min_temp"
+        android:layout_toEndOf="@id/first_widget_min_temp"
+        />
+
+
+    <TextView
+        android:id="@+id/first_widget_max_temp_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="Max: "
+        android:layout_marginTop="2dp"
+        android:layout_below="@id/first_widget_min_temp"
+        android:layout_alignStart="@id/first_widget_tv"
+        android:textColor="@color/colorPrimaryDark"
+        />
+
+    <TextView
+        android:id="@+id/first_widget_max_temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-- "
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_alignTop="@id/first_widget_max_temp_tv"
+        android:layout_toEndOf="@id/first_widget_max_temp_tv"
+        android:layout_alignBottom="@id/first_widget_max_temp_tv"
+        android:layout_marginStart="2dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/first_widget_max_temp_unit"
+        android:text="°C"
+        android:textSize="9sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_alignTop="@id/first_widget_max_temp"
+        android:layout_toEndOf="@id/first_widget_max_temp"
+        />
+
+
+</RelativeLayout>

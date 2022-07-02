@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data class="WeatherDataBinding">
+
+        <import type="android.content.Context" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="isFahrenheitEnabled"
+            type="boolean" />
+
+        <variable
+            name="listener"
+            type="com.theweatherapp.theweathersenseiapp.ui.WeatherDataFrag" />
+
+        <variable
+            name="weatherDataFragVM"
+            type="com.theweatherapp.theweathersenseiapp.weatherDataModel.WeatherData" />
+
+        <variable
+            name="isHourlyRvExpnaded"
+            type="boolean" />
+
+        <variable
+            name="isDailyRvExpnaded"
+            type="boolean" />
+
+        <variable
+            name="isBGEnabled"
+            type="boolean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.WeatherDataFrag">
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/main_frag_toolbar_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:elevation="6dp"
+            app:cardCornerRadius="10dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/main_frag_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:subtitleTextAppearance="@style/TextAppearance.AppCompat.Headline"
+                app:title="" />
+
+           <!-- <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/app_name"
+                android:textColor="@color/tv_color"
+                android:textSize="20sp" />-->
+        </androidx.cardview.widget.CardView>
+
+        <!--background image setup-->
+        <ImageView
+            android:id="@+id/app_background_image_view"
+            bgImageSetter="@{weatherDataFragVM.current.weather.get(0).description}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:visibility="@{isBGEnabled?View.VISIBLE:View.GONE}" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{isBGEnabled?View.VISIBLE:View.GONE}" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_frag_toolbar_card">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/weather_data_current_time_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="--, -- -- --:--"
+                    android:textColor="#4E4E4E"
+                    android:textSize="21sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:textSetter="@{weatherDataFragVM.current.dt}" />
+
+                <view
+                    class="android.widget.TextView"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="#A19D9C"
+                    app:layout_constraintBottom_toBottomOf="@id/weather_data_current_time_tv"
+                    app:layout_constraintEnd_toStartOf="@id/weather_data_frag_locate_me"
+                    app:layout_constraintStart_toEndOf="@id/weather_data_current_time_tv"
+                    app:layout_constraintTop_toTopOf="@id/weather_data_current_time_tv" />
+
+                <ImageView
+                    android:id="@+id/weather_data_frag_locate_me"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_click_ripple"
+                    android:src="@drawable/ic_baseline_not_listed_location_24"
+                    app:layout_constraintBottom_toBottomOf="@id/weather_data_current_time_tv"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/weather_data_current_time_tv" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/weather_frag_current_time_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:elevation="4dp"
+                    app:cardCornerRadius="5dp"
+                    app:layout_constraintTop_toBottomOf="@id/weather_data_current_time_tv">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ProgressBar
+                            android:id="@+id/weather_frag_progress_bar"
+                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="2dp"
+                            android:indeterminate="true"
+                            app:layout_constraintTop_toBottomOf="@id/weather_data_current_more_tv" />
+
+                        <TextView
+                            android:id="@+id/weather_data_frag_current_location_tv"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="2dp"
+                            android:ellipsize="marquee"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:freezesText="true"
+                            android:gravity="center"
+                            android:padding="2dp"
+                            android:scrollHorizontally="true"
+                            android:singleLine="true"
+                            android:text="@string/location_ph"
+                            android:textSize="23sp"
+                            android:textStyle="bold"
+                            app:drawableStartCompat="@drawable/ic_baseline_my_location_24"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:locationLat="@{weatherDataFragVM.lat}"
+                            app:locationLon="@{weatherDataFragVM.lon}" />
+
+                        <TextView
+                            android:id="@+id/weather_data_frag_current_temp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="5dp"
+                            android:text="@{String.valueOf((int)weatherDataFragVM.current.temp),default=`--`}"
+                            android:textSize="35sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/weather_data_frag_current_location_tv" />
+
+                        <ImageView
+                            android:id="@+id/current_rain_chances_icon"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/rain_chances_icon"
+                            app:layout_constraintBottom_toBottomOf="@id/weather_data_frag_weather_cond_tv"
+                            app:layout_constraintStart_toStartOf="@id/weather_data_frag_current_temp"
+                            app:layout_constraintTop_toBottomOf="@id/weather_data_frag_current_temp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="@{String.valueOf((int)(weatherDataFragVM.daily.get(0).pop*100))+`%`,default=`--%`}"
+                            app:layout_constraintBottom_toBottomOf="@id/current_rain_chances_icon"
+                            app:layout_constraintStart_toEndOf="@id/current_rain_chances_icon"
+                            app:layout_constraintTop_toTopOf="@id/current_rain_chances_icon" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{isFahrenheitEnabled?`°F`:`°C`,default=`°C`}"
+                            android:textSize="18sp"
+                            app:layout_constraintStart_toEndOf="@id/weather_data_frag_current_temp"
+                            app:layout_constraintTop_toTopOf="@id/weather_data_frag_current_temp" />
+
+                        <TextView
+                            android:id="@+id/weather_frag_current_min"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="Min:"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toStartOf="@id/weather_data_frag_weather_cond_img"
+                            app:layout_constraintStart_toEndOf="@id/weather_data_frag_current_temp"
+                            app:layout_constraintTop_toBottomOf="@id/weather_data_frag_current_location_tv" />
+
+                        <TextView
+                            android:id="@+id/weather_frag_current_min_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="@{String.valueOf((int)weatherDataFragVM.daily.get(0).temp.min),default=`--`}"
+                            android:textSize="20sp"
+                            app:layout_constraintBottom_toBottomOf="@id/weather_frag_current_min"
+                            app:layout_constraintStart_toEndOf="@id/weather_frag_current_min"
+                            app:layout_constraintTop_toTopOf="@id/weather_frag_current_min" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="2dp"
+                            android:text="@{isFahrenheitEnabled?`°F`:`°C`,default=`°C`}"
+                            app:layout_constraintStart_toEndOf="@id/weather_frag_current_min_tv"
+                            app:layout_constraintTop_toTopOf="@id/weather_frag_current_min_tv" />
+
+                        <TextView
+                            android:id="@+id/weather_frag_current_max"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="Max:"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toStartOf="@id/weather_data_frag_weather_cond_img"
+                            app:layout_constraintStart_toEndOf="@id/weather_data_frag_current_temp"
+                            app:layout_constraintTop_toBottomOf="@id/weather_frag_current_min" />
+
+                        <TextView
+                            android:id="@+id/weather_frag_current_max_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="@{String.valueOf((int)weatherDataFragVM.daily.get(0).temp.max+1),default=`--`}"
+                            android:textSize="20sp"
+                            app:layout_constraintBottom_toBottomOf="@id/weather_frag_current_max"
+                            app:layout_constraintStart_toEndOf="@id/weather_frag_current_max"
+                            app:layout_constraintTop_toTopOf="@id/weather_frag_current_max" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="2dp"
+                            android:text="@{isFahrenheitEnabled?`°F`:`°C`,default=`°C`}"
+                            app:layout_constraintStart_toEndOf="@id/weather_frag_current_max_tv"
+                            app:layout_constraintTop_toTopOf="@id/weather_frag_current_max_tv" />
+
+
+                        <ImageView
+                            android:id="@+id/weather_data_frag_weather_cond_img"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_marginEnd="5dp"
+                            android:src="@drawable/weather_sensei_icon"
+                            app:imageSetter="@{weatherDataFragVM.current.weather.get(0)}"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/weather_data_frag_current_location_tv" />
+
+                        <TextView
+                            android:id="@+id/weather_data_frag_weather_cond_tv"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@{weatherDataFragVM.current.weather.get(0).main,default=`-----`}"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="@id/weather_data_frag_weather_cond_img"
+                            app:layout_constraintStart_toStartOf="@id/weather_data_frag_weather_cond_img"
+                            app:layout_constraintTop_toBottomOf="@id/weather_data_frag_weather_cond_img" />
+
+                        <TextView
+                            android:id="@+id/weather_data_current_more_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/gradient_bg"
+                            android:gravity="start"
+                            android:padding="5dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:text="More Details"
+                            android:textColor="@color/tv_color"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            app:drawableEndCompat="@drawable/ic_baseline_navigate_next_24"
+                            app:drawableTint="@color/tv_color"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/weather_data_frag_weather_cond_tv" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+                <TextView
+                    android:id="@+id/weather_data_frag_tip_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="5dp"
+                    android:padding="5dp"
+                    android:text="@string/main_hint"
+                    app:drawableStartCompat="@drawable/ic_baseline_info_24"
+                    app:drawableTint="@android:color/holo_blue_dark"
+                    app:layout_constraintTop_toBottomOf="@id/weather_frag_current_time_card" />
+
+                <TextView
+                    android:id="@+id/weather_data_hourly_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="Hourly"
+                    android:textColor="@color/HBIconColor"
+                    android:textSize="21sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/weather_data_frag_tip_tv" />
+
+                <view
+                    class="android.widget.TextView"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="#4E4E4E"
+                    app:layout_constraintBottom_toBottomOf="@id/weather_data_hourly_tv"
+                    app:layout_constraintEnd_toStartOf="@id/weather_data_frag_hourly_drop_down_btn"
+                    app:layout_constraintStart_toEndOf="@id/weather_data_hourly_tv"
+                    app:layout_constraintTop_toTopOf="@id/weather_data_hourly_tv" />
+
+                <ImageView
+                    android:id="@+id/weather_data_frag_hourly_drop_down_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_click_ripple"
+                    android:onClick="@{listener}"
+                    android:rotation="@{isHourlyRvExpnaded?180:0}"
+                    android:src="@drawable/ic_round_arrow_drop_down_circle_24"
+                    app:layout_constraintBottom_toBottomOf="@id/weather_data_hourly_tv"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/weather_data_hourly_tv" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/weather_hourly_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layoutAnimation="@anim/layout_rv_animation"
+                    android:visibility="@{isHourlyRvExpnaded?View.VISIBLE:View.GONE}"
+                    app:layout_constraintTop_toBottomOf="@id/weather_data_hourly_tv" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/native_ad_card"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone"
+                    app:cardBackgroundColor="#BAD1D1D1"
+                    app:cardCornerRadius="5dp"
+                    app:layout_constraintEnd_toEndOf="@id/weather_frag_current_time_card"
+                    app:layout_constraintStart_toStartOf="@id/weather_frag_current_time_card"
+                    app:layout_constraintTop_toBottomOf="@id/weather_hourly_rv">
+
+                    <com.google.android.ads.nativetemplates.TemplateView
+                        android:id="@+id/my_template"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:gnt_template_type="@layout/gnt_medium_template_view" />
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/weather_data_daily_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="Daily"
+                    android:textColor="@color/HBIconColor"
+                    android:textSize="21sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/native_ad_card" />
+
+                <view
+                    class="android.widget.TextView"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="#4E4E4E"
+                    app:layout_constraintBottom_toBottomOf="@id/weather_data_daily_tv"
+                    app:layout_constraintEnd_toStartOf="@id/weather_data_frag_daily_drop_down_btn"
+                    app:layout_constraintStart_toEndOf="@id/weather_data_daily_tv"
+                    app:layout_constraintTop_toTopOf="@id/weather_data_daily_tv" />
+
+                <ImageView
+                    android:id="@+id/weather_data_frag_daily_drop_down_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_click_ripple"
+                    android:onClick="@{listener}"
+                    android:rotation="@{isDailyRvExpnaded?180:0}"
+                    android:src="@drawable/ic_round_arrow_drop_down_circle_24"
+                    app:layout_constraintBottom_toBottomOf="@id/weather_data_daily_tv"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/weather_data_daily_tv" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/weather_daily_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layoutAnimation="@anim/layout_rv_animation"
+                    android:visibility="@{isDailyRvExpnaded?View.VISIBLE:View.GONE}"
+                    app:layout_constraintTop_toBottomOf="@+id/weather_data_daily_tv" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

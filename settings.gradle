@@ -1,0 +1,4 @@
+include ':newnativetemplates'
+include ':app'
+rootProject.name = "Weather Sensei"
+include ':nativetemplates'

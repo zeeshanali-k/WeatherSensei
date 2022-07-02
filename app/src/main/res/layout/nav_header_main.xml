@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="300dp"
+    android:layout_height="match_parent"
+    android:background="@color/HBIconColor"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_horizontal_margin">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/nav_header_main_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        app:cardBackgroundColor="#CFCACA"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <ImageView
+                android:id="@+id/nav_header_icon"
+                android:layout_width="120dp"
+                android:layout_height="80dp"
+                android:layout_margin="5dp"
+                android:contentDescription="@string/nav_header_desc"
+                android:paddingTop="@dimen/nav_header_vertical_spacing"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/weather_sensei_icon" />
+
+            <TextView
+                android:id="@+id/tv1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:textStyle="bold"
+                android:text="@string/nav_header_title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="#4E4E4E"
+                app:layout_constraintStart_toStartOf="@id/nav_header_icon"
+                app:layout_constraintTop_toBottomOf="@id/nav_header_icon" />
+
+            <TextView
+                android:id="@+id/tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="@string/nav_header_subtitle"
+                android:textColor="#4E4E4E"
+                android:textStyle="bold"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tv1"
+                app:layout_constraintTop_toBottomOf="@id/tv1" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+
+   <!-- <view
+        android:id="@+id/divider1"
+        class="android.widget.TextView"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="2dp"
+        android:background="#FEFEFE"
+        app:layout_constraintTop_toBottomOf="@id/nav_header_main_card" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/fahrenheit_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/HBIconColor"
+        app:layout_constraintBottom_toBottomOf="@id/fahrenheit_switch_tv"
+        app:layout_constraintEnd_toEndOf="@id/divider1"
+        app:layout_constraintTop_toTopOf="@id/fahrenheit_switch_tv"
+        app:thumbTint="#FEFEFE" />
+
+    <TextView
+        android:id="@+id/fahrenheit_switch_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:drawablePadding="5dp"
+        android:drawableStart="@drawable/ic_baseline_ac_unit_24"
+        android:drawableTint="#FEFEFE"
+        android:text="Fahrenheit"
+        android:textColor="#FEFEFE"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider1" />
+
+
+    <view
+        android:id="@+id/divider2"
+        class="android.widget.TextView"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#FEFEFE"
+        app:layout_constraintEnd_toEndOf="@id/divider1"
+        app:layout_constraintStart_toStartOf="@id/divider1"
+        app:layout_constraintTop_toBottomOf="@id/fahrenheit_switch_tv" />
+
+    <TextView
+        android:id="@+id/nav_bar_guide_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:drawableStart="@drawable/ic_round_menu_book_24"
+        android:drawableTint="#FEFEFE"
+        android:drawablePadding="5dp"
+        android:gravity="start"
+        android:text="Weather Guide"
+        android:textColor="#FEFEFE"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/divider2"
+        app:layout_constraintStart_toStartOf="@id/divider2"
+        app:layout_constraintTop_toBottomOf="@id/divider2" />
+
+    <view
+        android:id="@+id/divider3"
+        class="android.widget.TextView"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#FEFEFE"
+        app:layout_constraintEnd_toEndOf="@id/divider2"
+        app:layout_constraintStart_toStartOf="@id/divider2"
+        app:layout_constraintTop_toBottomOf="@id/nav_bar_guide_btn" />
+
+    <TextView
+        android:id="@+id/nav_bar_background_manager_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:drawableStart="@drawable/ic_twotone_cloud_24"
+        android:drawableTint="#FEFEFE"
+        android:drawablePadding="5dp"
+        android:visibility="visible"
+        android:gravity="start"
+        android:text="Background Image"
+        android:textColor="#FEFEFE"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/background_manager_switch_btn"
+        app:layout_constraintStart_toStartOf="@id/divider3"
+        app:layout_constraintTop_toBottomOf="@id/divider3" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/background_manager_switch_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="visible"
+        app:layout_constraintTop_toTopOf="@id/nav_bar_background_manager_btn"
+        app:layout_constraintBottom_toBottomOf="@id/nav_bar_background_manager_btn"
+        />
+
+    <view
+        android:id="@+id/divider4"
+        class="android.widget.TextView"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#FEFEFE"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@id/divider3"
+        app:layout_constraintStart_toStartOf="@id/divider3"
+        app:layout_constraintTop_toBottomOf="@id/nav_bar_background_manager_btn" />
+
+
+    <TextView
+        android:id="@+id/nav_bar_tips_manager_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:drawableStart="@drawable/ic_baseline_info_24"
+        android:drawableTint="#FEFEFE"
+        android:drawablePadding="5dp"
+        android:gravity="start"
+        android:text="Show Tips"
+        android:textColor="#FEFEFE"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/background_manager_switch_btn"
+        app:layout_constraintStart_toStartOf="@id/divider4"
+        app:layout_constraintTop_toBottomOf="@id/divider4" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/tips_manager_switch_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/nav_bar_tips_manager_btn"
+        app:layout_constraintBottom_toBottomOf="@id/nav_bar_tips_manager_btn"
+        />
+
+    <view
+        android:id="@+id/divider5"
+        class="android.widget.TextView"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#FEFEFE"
+        app:layout_constraintEnd_toEndOf="@id/divider3"
+        app:layout_constraintStart_toStartOf="@id/divider3"
+        app:layout_constraintTop_toBottomOf="@id/nav_bar_tips_manager_btn" />
+
+
+
+    <TextView
+        android:id="@+id/nav_bar_about_app_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:drawableStart="@drawable/ic_baseline_info_24"
+        android:drawableTint="#FEFEFE"
+        android:drawablePadding="5dp"
+        android:gravity="start"
+        android:text="About"
+        android:textColor="#FEFEFE"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/divider5"
+        app:layout_constraintStart_toStartOf="@id/divider5"
+        app:layout_constraintTop_toBottomOf="@id/divider5" />
+
+    <view
+        android:id="@+id/third_last_divider"
+        class="android.widget.TextView"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#FEFEFE"
+        app:layout_constraintEnd_toEndOf="@id/divider5"
+        app:layout_constraintStart_toStartOf="@id/divider5"
+        app:layout_constraintTop_toBottomOf="@id/nav_bar_about_app_btn" />
+
+<TextView
+        android:id="@+id/nav_bar_share_app_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:drawableTint="#FEFEFE"
+        android:drawablePadding="5dp"
+        android:gravity="start"
+        android:text="Share"
+        android:textColor="#FEFEFE"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/divider5"
+        app:layout_constraintStart_toStartOf="@id/divider5"
+        app:layout_constraintTop_toBottomOf="@id/third_last_divider"
+    app:drawableStartCompat="@android:drawable/ic_menu_share" />
+
+    <view
+        android:id="@+id/scnd_last_divider"
+        class="android.widget.TextView"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#FEFEFE"
+        app:layout_constraintEnd_toEndOf="@id/divider5"
+        app:layout_constraintStart_toStartOf="@id/divider5"
+        app:layout_constraintTop_toBottomOf="@id/nav_bar_share_app_btn" />
+
+
+    <TextView
+        android:id="@+id/nav_bar_exit_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:drawableStart="@drawable/ic_twotone_exit_to_app_24"
+        android:drawableTint="#FEFEFE"
+        android:drawablePadding="5dp"
+        android:gravity="start"
+        android:text="Exit"
+        android:textColor="#FEFEFE"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/scnd_last_divider"
+        app:layout_constraintStart_toStartOf="@id/scnd_last_divider"
+        app:layout_constraintTop_toBottomOf="@id/scnd_last_divider" />
+
+    <view
+        android:id="@+id/divider_last"
+        class="android.widget.TextView"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#FEFEFE"
+        app:layout_constraintEnd_toEndOf="@id/divider4"
+        app:layout_constraintStart_toStartOf="@id/divider4"
+        app:layout_constraintTop_toBottomOf="@id/nav_bar_exit_btn" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="@string/weather_app_version"
+        app:layout_constraintStart_toStartOf="@id/divider_last"
+        app:layout_constraintTop_toBottomOf="@id/divider_last"
+        android:textColor="#FEFEFE"
+        android:padding="5dp"
+        />-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

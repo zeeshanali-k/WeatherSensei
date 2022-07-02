@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="hourlyWeatherDataDetails"
+            type="com.theweatherapp.theweathersenseiapp.weatherDataModel.Hourly" />
+
+        <variable
+            name="isHDFahrenheitEnabled"
+            type="boolean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDark"
+        tools:context=".WeatherHourlyDetails">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/hourly_activity_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:alpha="0.4"
+            android:background="@color/HBIconColor"
+            app:layout_constraintTop_toTopOf="parent"
+            app:titleTextColor="#4E4E4E" />
+
+        <ImageButton
+            android:id="@+id/hourly_details_back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:padding="5dp"
+            android:background="@drawable/btn_click_ripple"
+            android:src="@drawable/ic_round_arrow_back_ios_24"
+            app:layout_constraintBottom_toBottomOf="@id/hourly_details_title_tv"
+            app:layout_constraintStart_toStartOf="@id/hourly_activity_toolbar"
+            app:layout_constraintTop_toTopOf="@id/hourly_activity_toolbar" />
+
+        <TextView
+            android:id="@+id/hourly_details_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="-- ---"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:transitionName="hourlyWeatherTitleTrans"
+            app:hourlyTextSetter="@{hourlyWeatherDataDetails.dt}"
+            app:layout_constraintEnd_toEndOf="@id/hourly_activity_toolbar"
+            app:layout_constraintStart_toStartOf="@id/hourly_activity_toolbar"
+            app:layout_constraintTop_toTopOf="@id/hourly_activity_toolbar" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/hourly_main_details_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            app:cardBackgroundColor="@color/colorPrimary"
+            app:cardCornerRadius="5dp"
+            app:layout_constraintTop_toBottomOf="@id/hourly_details_title_tv"
+
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/hourly_details_temp_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@{String.valueOf((int)hourlyWeatherDataDetails.temp),default=`--`}"
+                    android:textSize="35sp"
+                    android:textStyle="bold"
+                    android:transitionName="hourlyWeatherTempTrans"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{isHDFahrenheitEnabled?`°F`:`°C`,default=`°C`}"
+                    android:textSize="17sp"
+                    app:layout_constraintStart_toEndOf="@id/hourly_details_temp_tv"
+                    app:layout_constraintTop_toTopOf="@id/hourly_details_temp_tv" />
+
+                <ImageView
+                    android:id="@+id/hourly_details_rain_chances_icon"
+                    android:transitionName="hourlyRvRainChancesTrans"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/rain_chances_icon"
+                    app:layout_constraintStart_toStartOf="@id/hourly_details_temp_tv"
+                    app:layout_constraintTop_toBottomOf="@id/hourly_details_temp_tv"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:padding="2dp"
+                    android:layout_marginStart="5dp"
+                    app:layout_constraintBottom_toBottomOf="@id/hourly_details_rain_chances_icon"
+                    app:layout_constraintTop_toTopOf="@id/hourly_details_rain_chances_icon"
+                    app:layout_constraintStart_toEndOf="@id/hourly_details_rain_chances_icon"
+                    android:text="@{String.valueOf((int)(hourlyWeatherDataDetails.pop*100))+`%`,default=`--%`}"
+                    />
+
+                <ImageView
+                    android:id="@+id/hourly_details_weather_img"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/weather_sensei_icon"
+                    android:transitionName="hourlyWeatherCondtionTrans"
+                    app:imageSetter="@{hourlyWeatherDataDetails.weather.get(0)}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/hourly_details_temp_tv" />
+
+                <TextView
+                    android:id="@+id/hourly_details_weather_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@{hourlyWeatherDataDetails.weather.get(0).main,default=`----`}"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    android:transitionName="hourlyWeatherConditionTvTrans"
+                    app:layout_constraintEnd_toEndOf="@id/hourly_details_weather_img"
+                    app:layout_constraintTop_toBottomOf="@id/hourly_details_weather_img" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            app:cardBackgroundColor="@color/colorPrimary"
+            app:cardCornerRadius="5dp"
+            app:layout_constraintTop_toBottomOf="@id/hourly_main_details_card">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:id="@+id/hourly_details_windspeed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="Pressure: "
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/hourly_details_windspeed_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:text="@{String.valueOf(hourlyWeatherDataDetails.pressure)+` hPa`,default=`---- hPa`}"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/hourly_details_windspeed"
+                    app:layout_constraintStart_toEndOf="@+id/hourly_details_windspeed"
+                    app:layout_constraintTop_toTopOf="@+id/hourly_details_windspeed" />
+
+
+                <TextView
+                    android:id="@+id/hourly_details_winddeg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Wind Deg: "
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/hourly_details_windspeed"
+                    app:layout_constraintTop_toBottomOf="@+id/hourly_details_windspeed" />
+
+                <TextView
+                    android:id="@+id/hourly_details_winddeg_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(hourlyWeatherDataDetails.windDeg),default=`----`}"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/hourly_details_winddeg"
+                    app:layout_constraintStart_toStartOf="@+id/hourly_details_windspeed_tv"
+                    app:layout_constraintTop_toTopOf="@+id/hourly_details_winddeg" />
+
+
+                <TextView
+                    android:id="@+id/hourly_details_pressure"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Wind Speed: "
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/hourly_details_winddeg"
+                    app:layout_constraintTop_toBottomOf="@+id/hourly_details_winddeg" />
+
+                <TextView
+                    android:id="@+id/hourly_details_pressure_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(hourlyWeatherDataDetails.windSpeed)+(isHDFahrenheitEnabled?` miles/hr`:` metre/sec`),default=`-- m/s`}"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/hourly_details_pressure"
+                    app:layout_constraintStart_toStartOf="@+id/hourly_details_winddeg_tv"
+                    app:layout_constraintTop_toTopOf="@+id/hourly_details_pressure" />
+
+
+                <TextView
+                    android:id="@+id/hourly_details_humidity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Humidity: "
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/hourly_details_pressure"
+                    app:layout_constraintTop_toBottomOf="@+id/hourly_details_pressure" />
+
+                <TextView
+                    android:id="@+id/hourly_details_humidity_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(hourlyWeatherDataDetails.humidity)+`%`,default=`----%`}"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/hourly_details_humidity"
+                    app:layout_constraintStart_toStartOf="@+id/hourly_details_pressure_tv"
+                    app:layout_constraintTop_toTopOf="@+id/hourly_details_humidity" />
+
+
+                <TextView
+                    android:id="@+id/hourly_details_dewpoint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Dew Point: "
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/hourly_details_humidity"
+                    app:layout_constraintTop_toBottomOf="@+id/hourly_details_humidity" />
+
+                <TextView
+                    android:id="@+id/hourly_details_dewpoint_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(hourlyWeatherDataDetails.dewPoint),default=`----`}"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/hourly_details_dewpoint"
+                    app:layout_constraintStart_toStartOf="@+id/hourly_details_humidity_tv"
+                    app:layout_constraintTop_toTopOf="@+id/hourly_details_dewpoint" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{isHDFahrenheitEnabled?`°F`:`°C`,default=`°C`}"
+                    app:layout_constraintStart_toEndOf="@id/hourly_details_dewpoint_tv"
+                    app:layout_constraintTop_toTopOf="@id/hourly_details_dewpoint_tv" />
+
+                <TextView
+                    android:id="@+id/hourly_details_pop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Pop: "
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/hourly_details_dewpoint"
+                    app:layout_constraintTop_toBottomOf="@+id/hourly_details_dewpoint" />
+
+                <TextView
+                    android:id="@+id/hourly_details_pop_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(hourlyWeatherDataDetails.pop),default=`----`}"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/hourly_details_pop"
+                    app:layout_constraintStart_toStartOf="@+id/hourly_details_dewpoint_tv"
+                    app:layout_constraintTop_toTopOf="@+id/hourly_details_pop" />
+
+                <TextView
+                    android:id="@+id/hourly_details_clouds"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="Clouds: "
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/hourly_details_pop"
+                    app:layout_constraintTop_toBottomOf="@+id/hourly_details_pop" />
+
+                <TextView
+                    android:id="@+id/hourly_details_clouds_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="@{String.valueOf(hourlyWeatherDataDetails.clouds)+`%`,default=`---%`}"
+
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/hourly_details_clouds"
+                    app:layout_constraintStart_toStartOf="@+id/hourly_details_pop_tv"
+                    app:layout_constraintTop_toTopOf="@+id/hourly_details_clouds" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

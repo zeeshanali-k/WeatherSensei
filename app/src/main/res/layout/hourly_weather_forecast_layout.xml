@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="com.theweatherapp.theweathersenseiapp.weatherDataModel.Hourly"/>
+        <import type="java.util.List"/>
+        <import type="android.util.Pair"/>
+        <import type="android.view.View"/>
+
+
+        <variable
+            name="hourlyWeatherData"
+            type="Hourly" />
+
+        <variable
+            name="isHRVFahrenheitEnabled"
+            type="boolean" />
+
+        <variable
+            name="transPair"
+            type="Pair&lt;View,String>[]" />
+
+        <variable
+            name="rvHourlyClickLitener"
+            type="com.theweatherapp.theweathersenseiapp.ui.customInrterfaces.MyClickInterFace" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:padding="4dp"
+        >
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/hourly_weather_rv_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:cardCornerRadius="5dp"
+            android:transitionName="hourlyCardTrans"
+            android:clickable="true"
+            android:focusable="true"
+            >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->rvHourlyClickLitener.onHourlyItemClick(hourlyWeatherData,transPair)}"
+            >
+            <TextView
+                android:id="@+id/hourly_rv_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@color/appTextColor"
+                android:text="--:-- --"
+                hourlyTextSetter="@{hourlyWeatherData.dt}"
+                android:padding="3dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:transitionName="hourlyWeatherTitleTrans"
+                />
+
+            <TextView
+                android:id="@+id/hourly_rv_temp_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:text="@{String.valueOf((int)hourlyWeatherData.temp),default=`--`}"
+                android:padding="2dp"
+                android:layout_margin="5dp"
+                android:textColor="@color/appTextColor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/hourly_rv_title_tv"
+                android:transitionName="hourlyWeatherTempTrans"
+                />
+            <TextView
+                android:id="@+id/hourly_weather_temp_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{isHRVFahrenheitEnabled?`°F`:`°C`,default=`°C`}"
+                app:layout_constraintTop_toTopOf="@id/hourly_rv_temp_tv"
+                app:layout_constraintStart_toEndOf="@id/hourly_rv_temp_tv"
+                android:transitionName="hourlyWeatherTempUnitTrans"
+                android:textColor="@color/appTextColor"
+                />
+
+            <ImageView
+                android:id="@+id/hourly_rv_rain_chances_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="30dp"
+                android:src="@drawable/rain_chances_icon"
+                android:transitionName="hourlyRvRainChancesTrans"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/hourly_rv_temp_tv" />
+
+            <TextView
+                android:id="@+id/hourly_weather_rv_rain_chances"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:padding="2dp"
+                android:text="@{String.valueOf((int)(hourlyWeatherData.pop*100))+`%`,default=`--%`}"
+                app:layout_constraintBottom_toBottomOf="@id/hourly_rv_rain_chances_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/hourly_rv_rain_chances_icon"
+                app:layout_constraintTop_toTopOf="@id/hourly_rv_rain_chances_icon" />
+
+            <!--            expandable layout-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/hourly_rv_rain_chances_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                android:id="@+id/hourly_rv_expandable_layout"
+                >
+                <ImageView
+                    android:id="@+id/hourly_weather_condition_img"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    app:imageSetter="@{hourlyWeatherData.weather.get(0)}"
+                    android:src="@drawable/weather_sensei_icon"
+                    android:layout_margin="5dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:transitionName="hourlyWeatherCondtionTrans"
+                    />
+
+                <TextView
+                    android:id="@+id/hourly_weather_condition_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="25sp"
+                    android:text="@{hourlyWeatherData.weather.get(0).main,default=`----`}"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/hourly_weather_condition_img"
+                    android:padding="2dp"
+                    android:textColor="@color/appTextColor"
+                    android:layout_margin="5dp"
+                    android:transitionName="hourlyWeatherConditionTvTrans"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!--                expander button-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@drawable/expand_bg"
+                android:layout_margin="5dp"
+                android:visibility="gone"
+                android:id="@+id/hourly_rv_expand_btn"
+                app:layout_constraintTop_toBottomOf="@id/hourly_rv_expandable_layout"
+                >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:id="@+id/hourly_rv_expand_img"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:src="@drawable/ic_baseline_expand_more_24"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

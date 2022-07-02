@@ -1,0 +1,743 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+
+        <variable
+            name="dailyWeatherDataDetails"
+            type="com.theweatherapp.theweathersenseiapp.weatherDataModel.Daily" />
+
+        <variable
+            name="dailyListener"
+            type="com.theweatherapp.theweathersenseiapp.WeatherDailyDetails" />
+
+        <variable
+            name="isDDFahrenheitEnabled"
+            type="boolean" />
+
+        <variable
+            name="isTempDetailsExp"
+            type="boolean" />
+
+
+        <variable
+            name="isExtraDetailsExp"
+            type="boolean" />
+
+    </data>
+
+    <ScrollView
+        android:id="@+id/daily_sc_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDark"
+        tools:context=".WeatherDailyDetails">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/daily_activity_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@android:color/darker_gray"
+                app:titleTextColor="@color/tv_color"
+                />
+
+            <ImageButton
+                android:id="@+id/daily_details_back_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{dailyListener}"
+                app:layout_constraintTop_toTopOf="@id/daily_activity_toolbar"
+                app:layout_constraintStart_toStartOf="@id/daily_activity_toolbar"
+                android:layout_marginStart="5dp"
+                app:layout_constraintBottom_toBottomOf="@id/daily_details_title_tv"
+                android:background="@drawable/btn_click_ripple"
+                android:src="@drawable/ic_round_arrow_back_ios_24"
+                android:padding="5dp"
+                />
+
+        <TextView
+            android:id="@+id/daily_details_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/daily_activity_toolbar"
+            app:layout_constraintEnd_toEndOf="@id/daily_activity_toolbar"
+            app:layout_constraintTop_toTopOf="@id/daily_activity_toolbar"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:padding="2dp"
+            android:layout_marginTop="10dp"
+            android:text="-- ---"
+            android:transitionName="dailyWeatherTitleTrans"
+            android:gravity="center"
+            app:dailyTextSetter="@{dailyWeatherDataDetails.dt}"
+            />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/daily_main_details_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:transitionName="dailyCardTrans"
+            app:cardBackgroundColor="@color/colorPrimary"
+            app:layout_constraintTop_toBottomOf="@id/daily_details_title_tv"
+
+            >
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <TextView
+                    android:id="@+id/daily_details_temp_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:text="@{String.valueOf((int)dailyWeatherDataDetails.temp.day),default=`--`}"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    android:transitionName="dailyWeatherTempTrans"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/daily_details_temp_tv"
+                    app:layout_constraintStart_toEndOf="@id/daily_details_temp_tv"
+                    android:text="@{isDDFahrenheitEnabled?`°F`:`°C`,default=`°C`}"
+                    android:textSize="17sp"
+                    />
+
+                <ImageView
+                    android:id="@+id/daily_details_rain_chances_icon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/rain_chances_icon"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/daily_details_temp_tv"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="100dp"
+                    android:layout_marginTop="10dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf((int)(dailyWeatherDataDetails.pop*100))+`%`,default=`--%`}"
+                    app:layout_constraintStart_toEndOf="@id/daily_details_rain_chances_icon"
+                    app:layout_constraintTop_toTopOf="@id/daily_details_rain_chances_icon"
+                    android:padding="2dp"
+                    android:textStyle="bold"
+                    android:textSize="22sp"
+                    android:layout_marginStart="5dp"
+                    app:layout_constraintBottom_toBottomOf="@id/daily_details_rain_chances_icon"
+                    />
+                <!--min temp-->
+                <TextView
+                    android:id="@+id/daily_details_min_temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@id/daily_details_temp_tv"
+                    app:layout_constraintTop_toBottomOf="@id/daily_details_temp_tv"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:text="Min: "
+                    />
+                <TextView
+                    android:id="@+id/daily_details_min_temp_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/daily_details_min_temp"
+                    app:layout_constraintTop_toTopOf="@id/daily_details_min_temp"
+                    app:layout_constraintBottom_toBottomOf="@id/daily_details_min_temp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:text="@{String.valueOf((int)dailyWeatherDataDetails.temp.min),default=`--`}"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/daily_details_min_temp_tv"
+                    app:layout_constraintStart_toEndOf="@id/daily_details_min_temp_tv"
+                    android:text="@{isDDFahrenheitEnabled?`°F`:`°C`,default=`°C`}"
+                    />
+
+                <!--max temp-->
+                <TextView
+                    android:id="@+id/daily_details_max_temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@id/daily_details_min_temp"
+                    app:layout_constraintTop_toBottomOf="@id/daily_details_min_temp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:text="Max: "
+
+                    />
+                <TextView
+                    android:id="@+id/daily_details_max_temp_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/daily_details_max_temp"
+                    app:layout_constraintTop_toTopOf="@id/daily_details_max_temp"
+                    app:layout_constraintBottom_toBottomOf="@id/daily_details_max_temp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:text="@{String.valueOf((int)dailyWeatherDataDetails.temp.max),default=`--`}"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/daily_details_max_temp_tv"
+                    app:layout_constraintStart_toEndOf="@id/daily_details_max_temp_tv"
+                    android:text="@{isDDFahrenheitEnabled?`°F`:`°C`,default=`°C`}"
+                    />
+
+
+                <ImageView
+                    android:id="@+id/daily_details_weather_img"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    app:imageSetter="@{dailyWeatherDataDetails.weather.get(0)}"
+                    android:src="@drawable/weather_sensei_icon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:transitionName="dailyWeatherCondtionTrans"
+                    android:layout_margin="5dp"
+                    app:layout_constraintTop_toTopOf="@id/daily_details_temp_tv"
+                    />
+
+                <TextView
+                    android:id="@+id/daily_details_weather_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/daily_details_weather_img"
+                    app:layout_constraintEnd_toEndOf="@id/daily_details_weather_img"
+                    android:gravity="center"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    android:text="@{dailyWeatherDataDetails.weather.get(0).main,default=`----`}"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+        </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/daily_details_temp_details_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/daily_main_details_card"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="21sp"
+        android:text="Temperature"
+        android:layout_margin="5dp"
+        />
+
+        <view
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            class="android.widget.TextView"
+            android:background="#716A71"
+            app:layout_constraintStart_toEndOf="@id/daily_details_temp_details_title"
+            app:layout_constraintTop_toTopOf="@id/daily_details_temp_details_title"
+            app:layout_constraintBottom_toBottomOf="@id/daily_details_temp_details_title"
+            app:layout_constraintEnd_toStartOf="@id/daily_details_temp_detail_dropdown"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            />
+
+        <ImageView
+            android:id="@+id/daily_details_temp_detail_dropdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_round_arrow_drop_down_circle_24"
+            android:rotation="180"
+            android:onClick="@{dailyListener}"
+            android:background="@drawable/btn_click_ripple"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/daily_details_temp_details_title"
+            app:layout_constraintBottom_toBottomOf="@id/daily_details_temp_details_title"
+            />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/daily_details_temp_details_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/colorPrimary"
+            android:layout_margin="5dp"
+            android:visibility="@{isTempDetailsExp?View.VISIBLE:View.GONE}"
+            app:layout_constraintTop_toBottomOf="@id/daily_details_temp_details_title"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/daily_details_morn_temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_margin="5dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:text="Morning: "
+                    />
+
+
+                <TextView
+                    android:id="@+id/daily_details_morn_temp_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/daily_details_morn_temp"
+                    app:layout_constraintTop_toTopOf="@id/daily_details_morn_temp"
+                    app:layout_constraintBottom_toBottomOf="@id/daily_details_morn_temp"
+                    android:layout_margin="5dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:text="@{String.valueOf((int)dailyWeatherDataDetails.temp.morn),default=`--`}"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/daily_details_morn_temp_tv"
+                    app:layout_constraintTop_toTopOf="@id/daily_details_morn_temp_tv"
+                    android:text="@{isDDFahrenheitEnabled?`°F`:`°C`,default=`°C`}"
+                />
+
+
+                <TextView
+                    android:id="@+id/daily_details_eve_temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/daily_details_morn_temp"
+                    app:layout_constraintBottom_toBottomOf="@id/daily_details_morn_temp"
+                    app:layout_constraintStart_toEndOf="@id/daily_details_morn_temp_tv"
+                    android:layout_margin="5dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:text="Evening: "
+                    />
+
+
+                <TextView
+                    android:id="@+id/daily_details_eve_temp_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/daily_details_eve_temp"
+                    app:layout_constraintTop_toTopOf="@id/daily_details_eve_temp"
+                    app:layout_constraintBottom_toBottomOf="@id/daily_details_eve_temp"
+                    android:layout_margin="5dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:text="@{String.valueOf((int)dailyWeatherDataDetails.temp.eve),default=`--`}"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/daily_details_eve_temp_tv"
+                    app:layout_constraintTop_toTopOf="@id/daily_details_eve_temp_tv"
+                    android:text="@{isDDFahrenheitEnabled?`°F`:`°C`,default=`°C`}"
+                />
+
+
+                <TextView
+                    android:id="@+id/daily_details_day_temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/daily_details_morn_temp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/daily_details_morn_temp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:text="Day: "
+                    />
+
+
+                <TextView
+                    android:id="@+id/daily_details_day_temp_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/daily_details_day_temp"
+                    app:layout_constraintTop_toTopOf="@id/daily_details_day_temp"
+                    app:layout_constraintBottom_toBottomOf="@id/daily_details_day_temp"
+                    android:layout_margin="5dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:text="@{String.valueOf((int)dailyWeatherDataDetails.temp.day),default=`--`}"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/daily_details_day_temp_tv"
+                    app:layout_constraintTop_toTopOf="@id/daily_details_day_temp_tv"
+                    android:text="@{isDDFahrenheitEnabled?`°F`:`°C`,default=`°C`}"
+                />
+
+
+                <TextView
+                    android:id="@+id/daily_details_night_temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/daily_details_eve_temp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/daily_details_eve_temp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:text="Night: "
+                    />
+
+
+                <TextView
+                    android:id="@+id/daily_details_night_temp_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/daily_details_night_temp"
+                    app:layout_constraintTop_toTopOf="@id/daily_details_night_temp"
+                    app:layout_constraintBottom_toBottomOf="@id/daily_details_night_temp"
+                    android:layout_margin="5dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:text="@{String.valueOf((int)dailyWeatherDataDetails.temp.night),default=`--`}"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/daily_details_night_temp_tv"
+                    app:layout_constraintTop_toTopOf="@id/daily_details_night_temp_tv"
+                    android:text="@{isDDFahrenheitEnabled?`°F`:`°C`,default=`°C`}"
+                />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <TextView
+            android:id="@+id/daily_details_extra_details_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/daily_details_temp_details_card"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_margin="5dp"
+            android:textSize="21sp"
+            android:text="More"
+            />
+
+        <view
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            class="android.widget.TextView"
+            android:background="#716A71"
+            app:layout_constraintStart_toEndOf="@id/daily_details_extra_details_title"
+            app:layout_constraintTop_toTopOf="@id/daily_details_extra_details_title"
+            app:layout_constraintBottom_toBottomOf="@id/daily_details_extra_details_title"
+            app:layout_constraintEnd_toStartOf="@id/daily_details_temp_extra_dropdown"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            />
+
+        <ImageView
+            android:id="@+id/daily_details_temp_extra_dropdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{dailyListener}"
+            android:rotation="180"
+            android:background="@drawable/btn_click_ripple"
+            android:src="@drawable/ic_round_arrow_drop_down_circle_24"
+            app:layout_constraintBottom_toBottomOf="@id/daily_details_extra_details_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/daily_details_extra_details_title" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/daily_details_extra_details_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/colorPrimary"
+            android:layout_margin="5dp"
+            android:visibility="@{isExtraDetailsExp?View.VISIBLE:View.GONE}"
+            app:layout_constraintTop_toBottomOf="@id/daily_details_extra_details_title"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:id="@+id/daily_details_sunrise"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="Sunrise: "
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/daily_details_sunrise_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:text="--:-- --"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:hourlyTextSetter="@{dailyWeatherDataDetails.sunrise}"
+                    app:layout_constraintBottom_toBottomOf="@+id/daily_details_sunrise"
+                    app:layout_constraintStart_toEndOf="@+id/daily_details_sunrise"
+                    app:layout_constraintTop_toTopOf="@+id/daily_details_sunrise" />
+
+                <TextView
+                    android:id="@+id/daily_details_sunset"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Sunset: "
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/daily_details_sunrise"
+                    app:layout_constraintTop_toBottomOf="@+id/daily_details_sunrise" />
+
+                <TextView
+                    android:id="@+id/daily_details_sunset_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="--:-- --"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:hourlyTextSetter="@{dailyWeatherDataDetails.sunset}"
+                    app:layout_constraintBottom_toBottomOf="@+id/daily_details_sunset"
+                    app:layout_constraintStart_toStartOf="@+id/daily_details_sunrise_tv"
+                    app:layout_constraintTop_toTopOf="@+id/daily_details_sunset" />
+
+                <TextView
+                    android:id="@+id/daily_details_windspeed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Wind Speed: "
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/daily_details_sunset"
+                    app:layout_constraintTop_toBottomOf="@+id/daily_details_sunset" />
+
+                <TextView
+                    android:id="@+id/daily_details_windspeed_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(dailyWeatherDataDetails.windSpeed)+(isDDFahrenheitEnabled?` miles/hr`:` metre/sec`),default=`--- m/s`}"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/daily_details_windspeed"
+                    app:layout_constraintStart_toStartOf="@+id/daily_details_sunset_tv"
+                    app:layout_constraintTop_toTopOf="@+id/daily_details_windspeed" />
+
+
+                <TextView
+                    android:id="@+id/daily_details_winddeg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Wind Deg: "
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/daily_details_windspeed"
+                    app:layout_constraintTop_toBottomOf="@+id/daily_details_windspeed" />
+
+                <TextView
+                    android:id="@+id/daily_details_winddeg_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(dailyWeatherDataDetails.windDeg),default=`----`}"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/daily_details_winddeg"
+                    app:layout_constraintStart_toStartOf="@+id/daily_details_windspeed_tv"
+                    app:layout_constraintTop_toTopOf="@+id/daily_details_winddeg" />
+
+
+                <TextView
+                    android:id="@+id/daily_details_pressure"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Pressure"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/daily_details_winddeg"
+                    app:layout_constraintTop_toBottomOf="@+id/daily_details_winddeg" />
+
+                <TextView
+                    android:id="@+id/daily_details_pressure_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(dailyWeatherDataDetails.pressure)+` hPa`,default=`---- hPa`}"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/daily_details_pressure"
+                    app:layout_constraintStart_toStartOf="@+id/daily_details_winddeg_tv"
+                    app:layout_constraintTop_toTopOf="@+id/daily_details_pressure"
+                    />
+
+
+                <TextView
+                    android:id="@+id/daily_details_humidity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Humidity: "
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/daily_details_pressure"
+                    app:layout_constraintTop_toBottomOf="@+id/daily_details_pressure" />
+
+                <TextView
+                    android:id="@+id/daily_details_humidity_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(dailyWeatherDataDetails.humidity)+`%`,default=`--%`}"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/daily_details_humidity"
+                    app:layout_constraintStart_toStartOf="@+id/daily_details_pressure_tv"
+                    app:layout_constraintTop_toTopOf="@+id/daily_details_humidity"
+                    />
+
+
+                <TextView
+                    android:id="@+id/daily_details_dewpoint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Dew Point: "
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/daily_details_humidity"
+                    app:layout_constraintTop_toBottomOf="@+id/daily_details_humidity" />
+
+                <TextView
+                    android:id="@+id/daily_details_dewpoint_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(dailyWeatherDataDetails.dewPoint),default=`----`}"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/daily_details_dewpoint"
+                    app:layout_constraintStart_toStartOf="@+id/daily_details_humidity_tv"
+                    app:layout_constraintTop_toTopOf="@+id/daily_details_dewpoint"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{isDDFahrenheitEnabled?`°F`:`°C`,default=`°C`}"
+                    app:layout_constraintTop_toTopOf="@id/daily_details_dewpoint_tv"
+                    app:layout_constraintStart_toEndOf="@id/daily_details_dewpoint_tv"
+                    />
+
+
+                <TextView
+                    android:id="@+id/daily_details_pop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Pop: "
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/daily_details_dewpoint"
+                    app:layout_constraintTop_toBottomOf="@+id/daily_details_dewpoint" />
+
+                <TextView
+                    android:id="@+id/daily_details_pop_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(dailyWeatherDataDetails.pop),default=`----`}"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/daily_details_pop"
+                    app:layout_constraintStart_toStartOf="@+id/daily_details_dewpoint_tv"
+                    app:layout_constraintTop_toTopOf="@+id/daily_details_pop"
+                    />
+
+                <TextView
+                    android:id="@+id/daily_details_uvi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="UV Index: "
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/daily_details_pop"
+                    app:layout_constraintTop_toBottomOf="@+id/daily_details_pop" />
+
+                <TextView
+                    android:id="@+id/daily_details_uvi_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="@{String.valueOf(dailyWeatherDataDetails.uvi),default=`----`}"
+
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/daily_details_uvi"
+                    app:layout_constraintStart_toStartOf="@+id/daily_details_pop_tv"
+                    app:layout_constraintTop_toTopOf="@+id/daily_details_uvi"
+                    />
+
+
+                <TextView
+                    android:id="@+id/daily_details_clouds"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Clouds: "
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="5dp"
+                    app:layout_constraintStart_toStartOf="@+id/daily_details_uvi"
+                    app:layout_constraintTop_toBottomOf="@+id/daily_details_uvi" />
+
+                <TextView
+                    android:id="@+id/daily_details_clouds_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="@{String.valueOf(dailyWeatherDataDetails.clouds)+`%`,default=`-- %`}"
+
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/daily_details_clouds"
+                    app:layout_constraintStart_toStartOf="@+id/daily_details_uvi_tv"
+                    app:layout_constraintTop_toTopOf="@+id/daily_details_clouds"
+                    />
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</layout>

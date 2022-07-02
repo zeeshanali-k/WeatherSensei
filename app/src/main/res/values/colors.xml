@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#F3E9E9</color>
+    <color name="colorPrimaryDark">#CAC7C7</color>
+    <color name="colorAccent">#FA4D4D</color>
+    <color name="HBIconColor">#4E4E4E</color>
+    <color name="appTextColor">#4E4E4E</color>
+    <color name="tv_color">#757474</color>
+</resources>

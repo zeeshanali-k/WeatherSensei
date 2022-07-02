@@ -1,0 +1,74 @@
+<resources>
+    <string name="app_name">Weather Sensei</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Weather Sensei</string>
+    <string name="nav_header_subtitle">Tech Scion</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="configure">Configure</string>
+    <string name="my_lorem_ipsum">kdasda askdalkdn akdaskldnakdasda askdalkdn akdaskldnakdasda askdalkdn akdaskldnakdasda askdalkdn akdaskldnakdasda askdalkdn akdaskldnakdasda askdalkdn akdaskldnakdasda askdalkdn akdaskldna</string>
+
+    <string name="app_terms_and_conditions">
+By downloading or using the app, these terms will automatically apply to you – you should make sure therefore that you read them carefully before using the app. You’re not allowed to copy, or modify the app, any part of the app, or our trademarks in any way. You’re not allowed to attempt to extract the source code of the app, and you also shouldn’t try to translate the app into other languages, or make derivative versions. The app itself, and all the trade marks, copyright, database rights and other intellectual property rights related to it, still belong to Tech Sensei.
+
+Tech Sensei is committed to ensuring that the app is as useful and efficient as possible. For that reason, we reserve the right to make changes to the app or to charge for its services, at any time and for any reason. We will never charge you for the app or its services without making it very clear to you exactly what you’re paying for.
+
+The Weather Sensei app stores and processes personal data that you have provided to us, in order to provide my Service. It’s your responsibility to keep your phone and access to the app secure. We therefore recommend that you do not jailbreak or root your phone, which is the process of removing software restrictions and limitations imposed by the official operating system of your device. It could make your phone vulnerable to malware/viruses/malicious programs, compromise your phone’s security features and it could mean that the Weather Sensei app won’t work properly or at all.
+
+The app does use third party services that declare their own Terms and Conditions.
+
+        App uses your location to show weather data.
+
+Link to Terms and Conditions of third party service providers used by the app
+
+>Google Play Services
+>AdMob
+
+You should be aware that there are certain things that Tech Sensei will not take responsibility for. Certain functions of the app will require the app to have an active internet connection. The connection can be Wi-Fi, or provided by your mobile network provider, but Tech Sensei cannot take responsibility for the app not working at full functionality if you don’t have access to Wi-Fi, and you don’t have any of your data allowance left.
+
+If you’re using the app outside of an area with Wi-Fi, you should remember that your terms of the agreement with your mobile network provider will still apply. As a result, you may be charged by your mobile provider for the cost of data for the duration of the connection while accessing the app, or other third party charges. In using the app, you’re accepting responsibility for any such charges, including roaming data charges if you use the app outside of your home territory (i.e. region or country) without turning off data roaming. If you are not the bill payer for the device on which you’re using the app, please be aware that we assume that you have received permission from the bill payer for using the app.
+
+Along the same lines, Tech Sensei cannot always take responsibility for the way you use the app i.e. You need to make sure that your device stays charged – if it runs out of battery and you can’t turn it on to avail the Service, Tech Sensei cannot accept responsibility.
+
+With respect to Tech Sensei’s responsibility for your use of the app, when you’re using the app, it’s important to bear in mind that although we endeavour to ensure that it is updated and correct at all times, we do rely on third parties to provide information to us so that we can make it available to you. Tech Sensei accepts no liability for any loss, direct or indirect, you experience as a result of relying wholly on this functionality of the app.
+
+At some point, we may wish to update the app. The app is currently available on Android – the requirements for system(and for any additional systems we decide to extend the availability of the app to) may change, and you’ll need to download the updates if you want to keep using the app. Tech Sensei does not promise that it will always update the app so that it is relevant to you and/or works with the Android version that you have installed on your device. However, you promise to always accept updates to the application when offered to you, We may also wish to stop providing the app, and may terminate use of it at any time without giving notice of termination to you. Unless we tell you otherwise, upon any termination, (a) the rights and licenses granted to you in these terms will end; (b) you must stop using the app, and (if needed) delete it from your device.
+
+Changes to This Terms and Conditions:
+
+I may update our Terms and Conditions from time to time. Thus, you are advised to review this page periodically for any changes. I will notify you of any changes by posting the new Terms and Conditions on this page.
+
+These terms and conditions are effective as of 2030-12-31
+
+Contact Us:
+
+If you have any questions or suggestions about my Terms and Conditions, do not hesitate to contact me at zeeshanalik73@gmail.com.</string>
+
+    <string name="share_app_string">
+        Hey There! Check this awesome weather app now. It has amazing UI and Widgets and shows accurate weather details with beautiful and more interactive UI.Don\'t miss this.
+    </string>
+
+    <!--    Weather guide-->
+
+    <string name="pressure_guide">Pressure in weather details indicates the atmospheric pressure on the sea level.Here its unit is hPa.</string>
+    <string name="pop_guide">POP (probability of precipitation) is the chacnes of rain (or precipitation).It is the percentage of chances of rain at a particular area.</string>
+    <string name="humidity_guide">Humidity is the amount of water vapor in the air. If there is a lot of water vapor in the air, the humidity will be high. The higher the humidity, the wetter it feels outside. On the weather reports, humidity is usually explained as relative humidity.It is given in percentage (%).</string>
+    <string name="windspeed_guide">It is the estimated speed of wind in a particular area.Its unit varies depending upon which temperature unit you have used. If you are using celcius the unit would be metre/second and if you are using fahrenheit then it would be miles/hour.</string>
+    <string name="winddeg_guide">It is the direction of wind in degrees in a particular area.</string>
+    <string name="clouds_guide">It is the percentage (%) of clouds in a particular area the more the clouds the more the percentage of cloudiness.</string>
+    <string name="dewpoint_guide">Atmospheric temperature (varying according to pressure and humidity) below which water droplets begin to condense and dew can form.Its unit varies depending upon which temperature unit you have used. If you are using celcius the unit would be celcius and if you are using fahrenheit then it would be fahrenheit.</string>
+    <string name="uvi_guide">The ultraviolet index, or UV index, is an international standard measurement of the strength of sunburn-producing ultraviolet (UV) radiation at a particular place and time.</string>
+    <string name="weather_app_version">V1.0</string>
+    <string name="weather_guide_tip">If the weather does not update or location seems to be inaccurate on app startup, consider clicking on the locate me icon on top right corner.</string>
+    <string name="about_app_paragraph">Weather Sensei is a live weather forecast app with beautiful and more interactive UI. For any suggestions or complaints contact us.</string>
+    <string name="main_hint">Click item to get more details.</string>
+    <string name="location_ph">Location</string>
+
+</resources>

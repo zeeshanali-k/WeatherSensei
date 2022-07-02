@@ -1,0 +1,30 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/gnt_white</item>
+        <item name="colorPrimaryDark">@color/gnt_white</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="MainActivityTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/gnt_white</item>
+        <item name="colorPrimaryDark">@color/gnt_white</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="CustomHB" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@color/HBIconColor</item>
+    </style>
+
+    <!--style for bottom sheet dialog-->
+    <style name="Custom.BSD.Style" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BSDStyle</item>
+    </style>
+
+    <style name="BSDStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+</resources>

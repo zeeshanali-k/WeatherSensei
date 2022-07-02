@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="com.theweatherapp.theweathersenseiapp.weatherDataModel.Daily"/>
+        <import type="java.util.List"/>
+        <import type="android.util.Pair"/>
+        <import type="android.view.View"/>
+
+        <variable
+            name="dailyWeaherData"
+            type="Daily" />
+
+        <variable
+            name="isDRVFahrenheitEnabled"
+            type="boolean" />
+
+        <variable
+            name="dailyTransPair"
+            type="Pair&lt;View,String>[]" />
+
+        <variable
+            name="dailyRvListener"
+            type="com.theweatherapp.theweathersenseiapp.ui.customInrterfaces.MyClickInterFace" />
+        </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:padding="2dp"
+        >
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/daily_weather_card"
+            android:transitionName="dailyCardTrans"
+            app:cardCornerRadius="5dp"
+            android:elevation="7dp"
+            android:clickable="true"
+            android:focusable="true"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{()->dailyRvListener.onDailyItemClick(dailyWeaherData,dailyTransPair)}"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/daily_rv_title_tv"
+                    dailyTextSetter="@{dailyWeaherData.dt}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp"
+                    android:text="--- --"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:transitionName="dailyWeatherTitleTrans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/daily_rv_temp_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:padding="2dp"
+                    android:text="@{String.valueOf((int)dailyWeaherData.temp.day),default=`--`}"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    android:transitionName="dailyWeatherTempTrans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/daily_rv_title_tv" />
+
+                <TextView
+                    android:id="@+id/daily_rv_temp_unit_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{isDRVFahrenheitEnabled?`°F`:`°C`,default=`°C`}"
+                    android:transitionName="dailyWeatherTempUnitTrans"
+                    app:layout_constraintStart_toEndOf="@id/daily_rv_temp_tv"
+                    app:layout_constraintTop_toTopOf="@id/daily_rv_temp_tv" />
+
+                <ImageView
+                    android:id="@+id/daily_rv_rain_chances_icon"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:padding="1dp"
+                    android:src="@drawable/rain_chances_icon"
+                    android:transitionName="dailyRvRainChancesTrans"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="30dp"
+                    app:layout_constraintTop_toBottomOf="@id/daily_rv_temp_tv" />
+
+                <TextView
+                    android:id="@+id/daily_weather_rv_rain_chances"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:text="@{String.valueOf((int)(dailyWeaherData.pop*100))+`%`,default=`--%`}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/daily_rv_rain_chances_icon"
+                    app:layout_constraintTop_toTopOf="@id/daily_rv_rain_chances_icon"
+                    app:layout_constraintBottom_toBottomOf="@id/daily_rv_rain_chances_icon"
+                    />
+
+                <!--            hidden layout/expandabel layout-->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/expandable_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/daily_rv_rain_chances_icon">
+                    <!--min temp setup-->
+
+                    <TextView
+                        android:id="@+id/daily_min_temp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginTop="4dp"
+                        android:text="Min:"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        android:transitionName="dailyWeatherMinTempTrans"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/daily_min_temp_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:text="@{String.valueOf((int)dailyWeaherData.temp.min),default=`--`}"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        android:transitionName="dailyWeatherMinTempTvTrans"
+                        app:layout_constraintBottom_toBottomOf="@id/daily_min_temp"
+                        app:layout_constraintStart_toEndOf="@id/daily_min_temp"
+                        app:layout_constraintTop_toTopOf="@id/daily_min_temp" />
+
+                    <TextView
+                        android:id="@+id/daily_min_temp_unit_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{isDRVFahrenheitEnabled?`°F`:`°C`,default=`°C`}"
+                        android:transitionName="dailyWeatherMinTempUnitTrans"
+                        app:layout_constraintStart_toEndOf="@id/daily_min_temp_tv"
+                        app:layout_constraintTop_toTopOf="@id/daily_min_temp_tv" />
+
+                    <!--max temp setup-->
+
+
+                    <TextView
+                        android:id="@+id/daily_max_temp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginTop="4dp"
+                        android:text="Max:"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        android:transitionName="dailyWeatherMaxTempTrans"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/daily_min_temp" />
+
+                    <TextView
+                        android:id="@+id/daily_max_temp_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:text="@{String.valueOf((int)dailyWeaherData.temp.max),default=`--`}"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        android:transitionName="dailyWeatherMaxTempTvTrans"
+                        app:layout_constraintBottom_toBottomOf="@id/daily_max_temp"
+                        app:layout_constraintStart_toEndOf="@id/daily_max_temp"
+                        app:layout_constraintTop_toTopOf="@id/daily_max_temp" />
+
+                    <TextView
+                        android:id="@+id/daily_max_temp_unit_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{isDRVFahrenheitEnabled?`°F`:`°C`,default=`°C`}"
+                        android:transitionName="dailyWeatherMaxTempUnitTrans"
+                        app:layout_constraintStart_toEndOf="@id/daily_max_temp_tv"
+                        app:layout_constraintTop_toTopOf="@id/daily_max_temp_tv" />
+
+
+                    <ImageView
+                        android:id="@+id/daily_weather_condition_img"
+                        imageSetter="@{dailyWeaherData.weather.get(0)}"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/weather_sensei_icon"
+                        android:transitionName="dailyWeatherCondtionTrans"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/daily_max_temp" />
+
+                    <TextView
+                        android:id="@+id/daily_weather_condition_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:padding="2dp"
+                        android:text="@{dailyWeaherData.weather.get(0).main,default=`----`}"
+                        android:textSize="25sp"
+                        android:textStyle="bold"
+                        android:transitionName="dailyWeatherConditionTvTrans"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/daily_weather_condition_img" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+<!--                expander button-->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:background="@drawable/expand_bg"
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/daily_rv_expand_btn"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:layout_constraintTop_toBottomOf="@id/expandable_container"
+                    >
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:id="@+id/daily_rv_expand_img"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:src="@drawable/ic_baseline_expand_more_24"
+                        />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
